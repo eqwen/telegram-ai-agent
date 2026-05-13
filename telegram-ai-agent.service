@@ -1,0 +1,24 @@
+[Unit]
+Description=Telegram AI Agent with Ollama
+After=network-online.target ollama.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=telegrambot
+Group=telegrambot
+WorkingDirectory=/opt/telegram-ai-agent
+EnvironmentFile=/opt/telegram-ai-agent/.env
+ExecStart=/opt/telegram-ai-agent/.venv/bin/python -m bot.bot
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/opt/telegram-ai-agent/data
+
+[Install]
+WantedBy=multi-user.target
